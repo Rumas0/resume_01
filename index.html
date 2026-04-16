@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume - CSE Undergraduate</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Times New Roman", Times, serif;
+        background: #ffffff;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      /* Navigation - Teal Color Sidebar */
+      .navbar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 250px;
+        height: 100vh;
+        background: #008080;
+        padding: 2rem 1rem;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .nav-container {
+        max-width: none;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        height: 100%;
+      }
+
+      .nav-logo {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 2rem;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        padding: 0.75rem 1rem;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        display: block;
+        width: 100%;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Main Container */
+      .container {
+        max-width: 1000px;
+        margin-left: 250px;
+        margin-right: auto;
+        padding: 2rem;
+      }
+
+      /* Header Section */
+      .header {
+        text-align: center;
+        padding: 3rem 0;
+        background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        display: none;
+      }
+
+      .header.active {
+        display: block;
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      .profile-img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 5px solid #008080;
+        margin-bottom: 1rem;
+        object-fit: cover;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        color: #008080;
+        margin-bottom: 0.5rem;
+      }
+
+      .header .tagline {
+        font-size: 1.1rem;
+        color: #666;
+        font-weight: 500;
+      }
+
+      .contact-info {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #555;
+      }
+
+      /* Section Styling */
+      .section {
+        background: white;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+        border-left: 5px solid #008080;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: none;
+      }
+
+      .section.active {
+        display: block;
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      .section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .section-title {
+        color: #008080;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        border-bottom: 2px solid #e0e0e0;
+        padding-bottom: 0.5rem;
+      }
+
+      .section-content {
+        padding-left: 0.5rem;
+      }
+
+      /* Skills Grid */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .skill-item {
+        background: #f0f9f9;
+        padding: 0.75rem 1rem;
+        border-radius: 20px;
+        text-align: center;
+        font-weight: 500;
+        color: #008080;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+      }
+
+      .skill-item:hover {
+        border-color: #008080;
+        background: white;
+      }
+
+      /* Timeline for Education */
+      .timeline {
+        position: relative;
+        padding-left: 2rem;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: #008080;
+      }
+
+      .timeline-item {
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-left: 1.5rem;
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -1.35rem;
+        top: 0.5rem;
+        width: 12px;
+        height: 12px;
+        background: #008080;
+        border-radius: 50%;
+        border: 3px solid white;
+      }
+
+      .timeline-content h3 {
+        color: #008080;
+        margin-bottom: 0.25rem;
+      }
+
+      .timeline-content .date {
+        color: #888;
+        font-size: 0.9rem;
+      }
+
+      /* Projects Grid */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1rem;
+      }
+
+      .project-card {
+        background: #f8f8f8;
+        padding: 1.5rem;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+        transition: all 0.3s ease;
+      }
+
+      .project-card:hover {
+        border-color: #008080;
+        transform: scale(1.02);
+      }
+
+      .project-card h3 {
+        color: #008080;
+        margin-bottom: 0.5rem;
+      }
+
+      .project-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+
+      .tech-tag {
+        background: #008080;
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.85rem;
+      }
+
+      /* Download Button */
+      .download-section {
+        text-align: center;
+        padding: 3rem 0;
+      }
+
+      .download-btn {
+        background: #008080;
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);
+        font-family: "Times New Roman", Times, serif;
+      }
+
+      .download-btn:hover {
+        background: #006666;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 128, 128, 0.4);
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .navbar {
+          display: none;
+        }
+
+        .container {
+          margin-left: 0;
+          padding: 2rem 1rem;
+        }
+
+        .header,
+        .section {
+          display: block !important;
+        }
+
+        .contact-info {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+      }
+
+      @media print {
+        .navbar {
+          display: none;
+        }
+        .container {
+          margin-left: 0;
+        }
+        .header,
+        .section {
+          display: block !important;
+          page-break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Sidebar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">Resume</div>
+        <div class="nav-links">
+          <a href="#about" class="nav-link">About</a>
+          <a href="#education" class="nav-link">Education</a>
+          <a href="#skills" class="nav-link">Skills</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#achievements" class="nav-link">Achievements</a>
+          <a href="#contact" class="nav-link">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Header Section -->
+      <header class="header active" id="about">
+        <img
+          src="https://via.placeholder.com/150/008080/ffffff?text=Your+Photo"
+          alt="Profile"
+          class="profile-img"
+          id="profileImage"
+        />
+        <h1>Itti Samur Tunib</h1>
+        <p class="tagline">Computer Science & Engineering Student</p>
+        <div class="contact-info">
+          <div class="contact-item">
+            <span>📧</span>
+            <span>ittisamurtunib20@gmail.com</span>
+          </div>
+          <div class="contact-item">
+            <span>📱</span>
+            <span>+880 1770-633823</span>
+          </div>
+          <div class="contact-item">
+            <span>📍</span>
+            <span>Dhaka, Bangladesh</span>
+          </div>
+          <div class="contact-item">
+            <span>🔗</span>
+            <span>www.linkedin.com/in/itti-samur-tunib-183064244</span>
+          </div>
+        </div>
+        <div style="margin-top: 1.5rem">
+          <input
+            type="file"
+            id="photoUpload"
+            accept="image/*"
+            style="display: none"
+          />
+          <button
+            onclick="document.getElementById('photoUpload').click()"
+            class="download-btn"
+            style="padding: 0.5rem 1.5rem; font-size: 1rem"
+          >
+            Upload Photo
+          </button>
+        </div>
+      </header>
+
+      <!-- Education Section -->
+      <section class="section" id="education">
+        <h2 class="section-title">🎓 Education</h2>
+        <div class="section-content">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h3>B.Sc. in Computer Science & Engineering</h3>
+                <p>Daffodil International University</p>
+                <span class="date"
+                  >2021 - 2026 (Expected Graduation: June 2026)</span
+                >
+                <p>
+                  <strong>Current Status:</strong> Final Semester | Final Exam:
+                  End of April | Thesis Defense: In June
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h3>Higher Secondary Certificate (HSC)</h3>
+                <p>Shsishu Kunja School & College</p>
+                <span class="date">2018 - 2020</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section class="section" id="skills">
+        <h2 class="section-title">💻 Technical Skills</h2>
+        <div class="section-content">
+          <div class="skills-grid">
+            <div class="skill-item">Python</div>
+            <div class="skill-item">Java</div>
+            <div class="skill-item">C/C++</div>
+            <div class="skill-item">JavaScript</div>
+            <div class="skill-item">HTML/CSS</div>
+            <div class="skill-item">Dart</div>
+            <div class="skill-item">Git & GitHub</div>
+            <div class="skill-item">Machine Learning</div>
+            <div class="skill-item">Data Structures</div>
+            <div class="skill-item">Problem Solving</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section class="section" id="projects">
+        <h2 class="section-title">🚀 Projects</h2>
+        <div class="section-content">
+          <div class="projects-grid">
+            <div class="project-card">
+              <h3>Final Year Thesis Project</h3>
+              <p>
+                Currently in progress. Research-focused project involving
+                [Hybrid Framework Combining SSL feature extraction & adaptive
+                Rebalancing for Small Data]. Expected completion within June.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">Research</span>
+                <span class="tech-tag">Python</span>
+              </div>
+            </div>
+            <div class="project-card">
+              <h3>Web Development Project</h3>
+              <p>
+                Full-stack web application with modern UI/UX design and
+                responsive layout.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">PHP</span>
+                <span class="tech-tag">Laravel</span>
+                <span class="tech-tag">MongoDB</span>
+              </div>
+            </div>
+            <div class="project-card">
+              <h3>Machine Learning Model</h3>
+              <p>
+                Developed predictive models using supervised learning algorithms
+                with 90%+ accuracy.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Scikit-learn</span>
+                <span class="tech-tag">Pandas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Achievements Section -->
+      <section class="section" id="achievements">
+        <h2 class="section-title">🏆 Achievements & Certifications</h2>
+        <div class="section-content">
+          <ul style="margin-left: 1.5rem; line-height: 2">
+            <li>Programming Contest Participant - DIU Take Off</li>
+            <li>Problem Solving (500+ problems solved)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section class="section" id="contact">
+        <h2 class="section-title">📬 Contact Information</h2>
+        <div class="section-content">
+          <p><strong>Email:</strong> ittisamurtunib20@gmail.com</p>
+          <p><strong>Phone:</strong> +880 1770-633823</p>
+          <p><strong>Location:</strong> Dhaka, Bangladesh</p>
+          <p>
+            <strong>LinkedIn:</strong>
+            www.linkedin.com/in/itti-samur-tunib-183064244
+          </p>
+          <p><strong>GitHub:</strong> https://github.com/Rumas0</p>
+          <p><strong>Portfolio:</strong> yourportfolio.com</p>
+        </div>
+      </section>
+
+      <!-- Download Section -->
+      <div class="download-section">
+        <button class="download-btn" onclick="downloadResume()">
+          <span>📥</span>
+          <span>Download Resume (PDF)</span>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // Section switching functionality
+      function showSection(sectionId) {
+        // Hide all sections
+        document.querySelectorAll(".header, .section").forEach((el) => {
+          el.classList.remove("active");
+        });
+
+        // Show target section
+        const target = document.getElementById(sectionId);
+        if (target) {
+          target.classList.add("active");
+        }
+
+        // Update active nav link
+        document.querySelectorAll(".nav-links a").forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === "#" + sectionId) {
+            link.classList.add("active");
+          }
+        });
+      }
+
+      // Navigation click handlers
+      document.querySelectorAll(".nav-links a").forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const sectionId = this.getAttribute("href").substring(1);
+          showSection(sectionId);
+        });
+      });
+
+      // Photo upload functionality
+      document
+        .getElementById("photoUpload")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              document.getElementById("profileImage").src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+      // Download function
+      function downloadResume() {
+        window.print();
+        alert(
+          "Use Ctrl+P (or Cmd+P on Mac) to save as PDF if the print dialog does not open automatically."
+        );
+      }
+    </script>
+  </body>
+</html>
